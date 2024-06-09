@@ -2,28 +2,31 @@ let slideIndices = [1, 1, 1];
 let slideId = ["project1", "project2", "project3"];
 
 function plusSlides(n, no) {
-    showSlides(slideIndices[no - 1] += n, no);
+    showSlides(slideIndices[no] += n, no);
 }
 
 function showSlides(n, no) {
     let i;
-    let x = document.querySelectorAll(`#${slideId[no - 1]} .slides`);
-    if (n > x.length) {slideIndices[no - 1] = 1}
-    if (n < 1) {slideIndices[no - 1] = x.length}
-    for (i = 0; i < x.length; i++) {
-        x[i].style.display = "none";
+    let slides = document.querySelectorAll(`#${slideId[no]} .slides`);
+    if (n > slides.length) {
+        slideIndices[no] = 1;
     }
-    x[slideIndices[no - 1] - 1].style.display = "block";
+    if (n < 1) {
+        slideIndices[no] = slides.length;
+    }
+    for (i = 0; i < slides.length; i++) {
+        slides[i].style.display = "none";
+    }
+    slides[slideIndices[no] - 1].style.display = "block";
 }
 
+// Initialize slides
+for (let i = 0; i < slideId.length; i++) {
+    showSlides(1, i);
+}
+
+// Contact form submission
 document.getElementById('contact-form').addEventListener('submit', function(event) {
     event.preventDefault();
     alert('Your message has been sent!');
-});
-
-// Initialize slides
-document.addEventListener('DOMContentLoaded', function() {
-    for (let i = 0; i < slideIndices.length; i++) {
-        showSlides(slideIndices[i], i + 1);
-    }
 });
